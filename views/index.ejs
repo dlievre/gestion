@@ -18,8 +18,9 @@
 <% if (locals.info.niv) { %><input type="text" name="demande" value="<%= info.niv %>" hidden></input><% } %>
 <% if (locals.info.niv === undefined || locals.info.niv === 'home' ) { %> 
 
-<button name="Véhicule" class="ui orange button">Véhicule</button>
+<button name="véhicule" class="ui orange button" value='ok'>véhicule<br /><span>Gestion Parc</span></button>
 <button name="voirie" class="ui yellow button" value='ok'>Voirie<br /><span>Intervention</span></button>
+
 
 <button class="ui olive button">Locaux</button>
 <button class="ui green button">Espaces Verts<br /><span>Entretien</span></button>
@@ -29,6 +30,14 @@
 <button class="ui purple button">Réunion</button>
 <button class="ui black button">Absence</button>
 <button name="accident" class="ui red button" value='ok'>Accident<br /><span>appel urgence</span></button>
+<% } %>
+
+<% if (locals.info.niv === 'véhicule' ) { %>  
+<button class="ui orange button">Réparation</button>
+<button name="Révision"  value='ok' class="ui orange button">Révision</button>
+<button class="ui orange button">Nettoyage</button>
+<button class="ui orange button">Achat</button>
+<button class="ui orange button">Autres...<br /><span>A préciser</span></button>
 <% } %>
 
 <% if (locals.info.niv === 'voirie' ) { %>  
@@ -72,9 +81,8 @@
 <button  name="accident_grave" class="ui red button" value='ok'>Accident Grave<br /><span>appel urgence</span></button>
 <% } %>
 
-<% if (locals.info.msg != undefined && locals.info.msg != '') { %><input name="niv" type="text" value="<%= info.msg %>"><% } %>
-<% if (locals.info != undefined ) { %><div><h4><%= info.text %></0.3
-h4></div><% } %>
+<% if (locals.info.msg != undefined && locals.info.msg != '') { %><h3><%= info.msg %></h3><% } %>
+<% if (locals.info != undefined ) { %><div><h4><%= info.text %><h4></div><% } %>
 
 
 <% if (locals.info.niv === 'voirie_mobilier' ) { %>  
@@ -87,8 +95,8 @@ h4></div><% } %>
 
 <% if (locals.info.saisie === 'yes' ) { %>  
 <div class="field">
-<label for="message">Saisissez votre demande</label>
-<textarea name="message" id="message" ></textarea>
+<label for="message">Saisissez votre demande</label><br>
+<textarea name="message" id="message" ></textarea><br>
 <button type="submit" class="ui blue labeled submit icon button"><i class="icon edit"></i>Envoyer</button>
 <% } %>
 <% if (locals.info.niv === 'out' ) { %>  
