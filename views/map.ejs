@@ -1,0 +1,29 @@
+<% include header %>
+<h2> Cartographie d'évènements </h2>
+<% if (locals.info.adresse) { %>
+<%= info.adresse %>
+<% } %>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+
+<style>
+#mapid { height: 380px; width: 100%; border: solid black 2px;}
+</style>
+
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<div id="mapid"></div>   
+
+<script type="text/javascript">
+
+      var mymap = L.map('mapid').setView([<%= lat %>, <%= lon %>], 13)
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
+    //  var searchControl = L.control.photon(photonControlOptions);
+   // searchControl.addTo(map);
+
+L.marker([<%= lat %>, <%= lon %>]).addTo(mymap)
+    .bindPopup('<%= info.adresse %>')
+    //.openPopup();
+      
+    </script>
+</div>
+
+<% include footer %>

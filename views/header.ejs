@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gestion </title>
+<link rel="stylesheet" href="/stylesheets/semantic/semantic.min.css">
+<style>
+.main.container{ margin-top: 7em; }
+</style>
+</head>
+<body>
+
+<div class="ui fixed inverted menu">
+<% if (locals.info.menu == 'index') { %>
+<a href="/" class="header active item"><i class="home icon"></i>Accueil</a>
+<a href="/map" class="header item"><i class="street view icon"></i>Cartographie</a>
+<a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
+<a href="/" class="header item"><i class="settings icon"></i>Settings</a>
+<a href="/superuser" class="header item"><i class="settings icon"></i>Super User</a>
+<% } %>
+<% if (locals.info.menu == 'map') { %>
+<a href="/" class="header item"><i class="home icon"></i>Accueil</a>
+<a href="/map" class="header active item"><i class="street view icon"></i>Cartographie</a>
+<a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
+<a href="/" class="header item"><i class="settings icon"></i>Settings</a>
+<% } %>
+</div>
+<div class="ui main container">
+<% if (locals.error) { %><div class="ui negative message"><p><%= error %></p></div><% } %>
+<% if (locals.error == 'out') { %>
+<a href="/superuser" class="header item"><i class="settings icon"></i>Super User</a>
+<% } %>
