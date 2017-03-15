@@ -11,7 +11,9 @@ app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
 
-console.log('route index')
+
+
+console.log('index.js')
 
 var domaine = function() {
 //var domaine.vehicule = new Object()
@@ -27,30 +29,48 @@ this.saisie = 'no'
 var véhicule = new domaine()
 véhicule.niv = 'véhicule'
 véhicule.msg = 'Intervention véhicule'
-véhicule.saisie = 'yes'
+véhicule.saisie = 'no'
+var réparation = new domaine()
+réparation.niv = 'réparation'
+réparation.msg = 'Intervention réparation véhicule'
+réparation.saisie = 'yes'
 
 var voirie = new domaine()
 voirie.niv = 'voirie'
 voirie.msg = 'Intervention voirie'
 voirie.saisie = 'no'
-
 var voirie_encombrant = new domaine()
 voirie_encombrant.niv = 'voirie_encombrant'
 voirie_encombrant.msg = 'Intervention voirie / encombrant'
 voirie_encombrant.saisie = 'no'
-
 var voirie_mobilier = new domaine()
 voirie_mobilier.niv = 'voirie_mobilier'
 voirie_mobilier.msg = 'Intervention voirie / encombrant : mobilier'
 voirie_mobilier.saisie = 'yes'
 
+var accident = new domaine()
+accident.niv = 'accident'
+accident.msg = 'Information : accident'
+accident.saisie = 'no'
+var accident_route = new domaine()
+accident_route.niv = 'accident_route'
+accident_route.msg = 'Information :  accident de la route'
+accident_route.saisie = 'no'
+var accident_grave = new domaine()
+accident_grave.niv = 'accident_route_grave'
+accident_grave.msg = 'Information :  accident grave de la route'
+accident_grave.saisie = 'yes'
 //véhicule.requete = 'request.body.'+véhicule.niv
 
-var domaines = new Object()
+var domaines = new Object() // liste des 
 domaines.véhicule = 'véhicule'
+domaines.réparation = 'réparation'
 domaines.voirie = 'voirie'
 domaines.voirie_encombrant = 'voirie_encombrant'
 domaines.voirie_mobilier = 'voirie_mobilier'
+domaines.accident = 'accident'
+domaines.accident_route = 'accident_route'
+domaines.accident_grave = 'accident_route_grave'
 
 
 app.post('/', upload.array(), (request, response) => {
@@ -69,6 +89,15 @@ app.post('/', upload.array(), (request, response) => {
 			info.saisie = eval(variable+'.saisie')
 
 	}
+	if (request.body.message){
+		console.log (request.body+' '+request.body.message.lenght)
+		info.menu = 'index'
+		info.page = 'index'
+		info.niv =  ''
+		info.msg = 'Votre message est transmis au service concerné : '+request.body.demande+' : '+request.body.message
+		info.saisie = 'no'
+	}
+
 	if (info.menu) response.render(info.page, { info })
 }
 
@@ -77,88 +106,6 @@ app.post('/', upload.array(), (request, response) => {
 	info.page = 'index'
 	var menu = 'index'
 
-
-	// if (request.body.véhiculedd){
-		
-	// 		info.menu = véhicule.menu
-	// 		info.page = véhicule.page
-	// 		info.niv =  véhicule.niv
-	// 		info.msg = véhicule.msg
-	// 		info.saisie = véhicule.saisie
-
-	// 	//response.render(info.page, { info })
-
-	// }
-	
-
-	// 	if (request.body.voiriedd){
-	// 		console.log('voirie')
-	// 		console.log('post voirie '+request.body.voirie)
-	// 		init = 'non'
-	// 		info.menu = 'index'
-	// 		info.page = 'index'
-	// 		info.niv =  'voirie'
-	// 		info.msg = 'Intervention voirie'
-	// 		info.saisie = 'no'
-
-
-	// }
-	// 	if (request.body.voirie_encombrant){
-	// 		info.menu = 'index'
-	// 		info.page = 'index'
-	// 		info.niv =  'voirie_encombrant'
-	// 		info.msg = 'Intervention voirie'
-	// 		info.saisie = 'no'
-	// }
-
-	// 	if (request.body.voirie_mobilier){
-	// 		info.menu = 'index'
-	// 		info.page = 'index'
-	// 		info.niv =  'voirie_mobilier'
-	// 		info.msg = 'Intervention voirie'
-	// 		info.saisie = 'yes'
-	// 		//response.render('index', {menu, niv: "voirie_mobilier", msg:"Intervention voirie - Encombrant : Mobilier", saisie: 'ok', info })
-	// }
-		if (request.body.accident){
-			info.menu = 'index'
-			info.page = 'index'
-			info.niv =  'accident'
-			info.msg = 'Information : accident'
-			info.saisie = 'no'
-			//response.render('index', {menu, niv: "accident", msg:"Information : accident", saisie: 'no', info })
-	}
-		if (request.body.accident_route){
-			info.menu = 'index'
-			info.page = 'index'
-			info.niv =  'accident_route'
-			info.msg = 'Information : accident de la route'
-			info.saisie = 'no'
-			//response.render('index', {menu, niv: "accident_route", msg:"Information : accident de la route", saisie: 'no', info })
-	}
-		if (request.body.accident_grave){
-			info.menu = 'index'
-			info.page = 'index'
-			info.niv =  'accident_grave'
-			info.msg = 'Information :  accident grave de la route'
-			info.saisie = 'yes'
-			//response.render('index', {menu, niv: "accident_grave", msg:"Information :  accident grave de la route", saisie: 'ok' })
-	}
-		if (request.body.litige === 'ok' ){
-			init = 'non'
-			response.render('index', {menu, niv: "litige", msg:"Information : litige", btn: ['interne', 'client', 'commercial'] })
-	}
-
-		if (request.body.message){
-			info.menu = 'index'
-			info.page = 'index'
-			info.niv =  ''
-			info.msg = 'Votre message est transmis au service concerné : '+request.body.demande+' : '+request.body.message
-			info.saisie = 'no'
-	}
-		if (request.body.aide === 'ok' ){
-			var msg = 'débrouille-toi'
-		response.render('index', {msg})
-	}
 
 if (request.body.map){ 
 	info.menu = 'map'
@@ -187,7 +134,26 @@ console.log ('map : '+info.adresse)
 
 })
 
-app.get('/', (req, res) => {
+app.get('/superuser', upload.array(), (request, response) => {
+	var sess = request.session
+console.log('index superuser')
+	var info = new Object()
+	info.menu = 'superuser'
+	info.page = 'superuser'
+
+	//read_file("./texte.txt")
+	read_file("./package.json", 'utf8',  (err, data)=>{ info.data})
+	console.log('info.data '+info.data)
+
+
+//if (info.menu) response.render(info.page, { info })
+
+console.log ('superuser : ')
+
+
+})
+
+app.get('/', (req, res) => { // traiter le cas apres demande erreur sur console 
 	var sess = req.session
 	var info = new Object()
 

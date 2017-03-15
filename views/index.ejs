@@ -33,11 +33,14 @@
 <% } %>
 
 <% if (locals.info.niv === 'véhicule' ) { %>  
-<button class="ui orange button">Réparation</button>
-<button name="Révision"  value='ok' class="ui orange button">Révision</button>
+<button name="réparation"  value='ok' class="ui orange button">Réparation</button>
+<button name="révision"  value='ok' class="ui orange button">Révision</button>
 <button class="ui orange button">Nettoyage</button>
 <button class="ui orange button">Achat</button>
 <button class="ui orange button">Autres...<br /><span>A préciser</span></button>
+<% } %>
+<% if (locals.info.niv === 'réparation' ) { %>  
+<button name="réparation"  value='ok' class="ui orange button">Réparation</button>
 <% } %>
 
 <% if (locals.info.niv === 'voirie' ) { %>  
@@ -77,8 +80,8 @@
 <button class="ui red button">Autres...<br /><span>Entretien</span></button>
 <% } %>
 
-<% if (locals.info.niv === 'accident_grave' ) { %>  
-<button  name="accident_grave" class="ui red button" value='ok'>Accident Grave<br /><span>appel urgence</span></button>
+<% if (locals.info.niv === 'accident_route_grave' ) { %>  
+<button  name="accident_route_grave" class="ui red button" value='ok'>Accident Grave<br /><span>appel urgence</span></button>
 <% } %>
 
 <% if (locals.info.msg != undefined && locals.info.msg != '') { %><h3><%= info.msg %></h3><% } %>
@@ -92,11 +95,18 @@
 <div class="ui toggle checkbox"><input name="public" type="checkbox"><label>Nettoyage voirie </label></div>
 <br/>
 <% } %>
+<% if (locals.info.niv === 'réparation' ) { %>  
+<div class="ui checkbox"><input name="958 RM 92" type="checkbox"><label>Renault CLIO / 958 RM 92</label></div><br/>
+<div class="ui checkbox"><input name="456 AD 92" type="checkbox"><label>Peugeot 308 / 456 AD 92</label></div><br/>
+<div class="ui checkbox"><input name="580 WS 92" type="checkbox"><label>Audi A3 / 580 WS 92</label></div><br/>
+<div class="ui checkbox"><input name="autre" type="checkbox"><label>Autre... </label></div>
+<br/><br/>
+<% } %>
 
 <% if (locals.info.saisie === 'yes' ) { %>  
 <div class="field">
 <label for="message">Saisissez votre demande</label><br>
-<textarea name="message" id="message" ></textarea><br>
+<textarea name="message" cols="50" rows="10" id="message" ></textarea><br>
 <button type="submit" class="ui blue labeled submit icon button"><i class="icon edit"></i>Envoyer</button>
 <% } %>
 <% if (locals.info.niv === 'out' ) { %>  

@@ -28,7 +28,10 @@ app.use(session({
 
 // ***** modules perso
 // @ map module gestion de la map
-var map = require('./nodules/map')
+var map = require('./nodules/map') // affichage cartographie
+console.log('nodule file')
+var readfile = require('./nodules/read_file') // lecture de fichier
+
 
 
 // view engine setup

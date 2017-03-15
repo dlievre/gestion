@@ -1,5 +1,11 @@
 <% include header %>
-<h2> Super user </h2>
-<p><%= msg %></p>
+<div class="column">  
+<h1> Gestionnaire Super User </h1>
+<h2> Liste des utilisateurs </h2>
+<h2> Fichier Package nodejs </h2>
+
+<% if (locals.info.data != undefined) { %><p><%= data } %></p>
 <p>https://www.npmjs.com/package/jsdoc<br/> Creation de la doc automatique, dans le dossier courant tapez npm jsdoc server.js
+</p>
+</div>
 <% include footer %></p>
