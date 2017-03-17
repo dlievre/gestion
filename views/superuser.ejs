@@ -1,10 +1,35 @@
 <% include header %>
 <div class="column">  
 <h1> Gestionnaire Super User </h1>
+<h2> Spécifications Fonctionnelles </h2>
+<p>- Projet interactif dans la gestion des demandes formulées par l'utilisateur</p>
+<p>- Arborescence intuitive d'accés au formulaire de demande</p>
+<p>- Gestion des comptes utilisateurs pour accès sécurisé aux services</p>
+<p>- Cartographie permettant de localiser l'ensemble des sites gérés</p>
+<p>- Localisation d'un site en lien à une demande</p>
+<p>- Tchat sur l'intranet pour discussion Temps Réel entre utilisateurs</p>
+<p>- Collecte d'informations IoT de modules-capteur Lora et Wifi avec géolocalisation</p>
+<h2> Spécifications Techniques </h2>
+<p>- Serveur NodeJs V6</p>
+<p>- Moteur de rendu EJS</p>
+<p>- Template Semantic.ui</p>
+<p>- Base de donnée Mysql et MongoDb</p>
+<p>- Cartographie OpenStreetMap</p>
+
 <h2> Liste des utilisateurs </h2>
 <h2> Fichier Package nodejs </h2>
 
-<% if (locals.info.data != undefined) { %><p><%= data } %></p>
+<% if (locals.info) { %>
+<p><%- info.text %></p>
+<% } %>
+<% if (locals.tbl) { %><p>debut</p>
+<%- Object.values(tbl) %>	
+
+
+<% } %>
+
+
+
 <p>https://www.npmjs.com/package/jsdoc<br/> Creation de la doc automatique, dans le dossier courant tapez npm jsdoc server.js
 </p>
 </div>

@@ -10,20 +10,18 @@ var upload = multer()
 app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
-
-
-
 console.log('index.js')
 
-var domaine = function() {
+// ***** structure global des boutons 
+var domaine = function() { 
 //var domaine.vehicule = new Object()
-this.id = '',
-this.nom = '',
-this.menu = 'index',
-this.page = 'index',
-this.niv = '',
-this.msg = '',
-this.saisie = 'no'
+	this.id = '',
+	this.nom = '',
+	this.menu = 'index',
+	this.page = 'index',
+	this.niv = '',
+	this.msg = '',
+	this.saisie = 'no'
 }
 
 var véhicule = new domaine()
@@ -72,34 +70,34 @@ domaines.accident = 'accident'
 domaines.accident_route = 'accident_route'
 domaines.accident_grave = 'accident_route_grave'
 
-
-app.post('/', upload.array(), (request, response) => {
+// ***** traitement des clics des boutons
+app.post('/', upload.array(), (request, response) => { //***** app.post
 	var sess = request.session
 
 	for (variable in domaines) {	
-	requete = 'request.body.'+variable
+		requete = 'request.body.'+variable
 
-	var info = new Object()
-	if (eval(requete)){
-		console.log('req '+variable+ eval(variable.niv))
-			info.menu = eval(variable+'.menu')
-			info.page = eval(variable+'.page')
-			info.niv =  eval(variable+'.niv')
-			info.msg = eval(variable+'.msg')
-			info.saisie = eval(variable+'.saisie')
+		var info = new Object()
+		if (eval(requete)){
+			console.log('req '+variable+ eval(variable.niv))
+				info.menu = eval(variable+'.menu')
+				info.page = eval(variable+'.page')
+				info.niv =  eval(variable+'.niv')
+				info.msg = eval(variable+'.msg')
+				info.saisie = eval(variable+'.saisie')
 
+		}
+		if (request.body.message){
+			console.log (request.body+' '+request.body.message.lenght)
+			info.menu = 'index'
+			info.page = 'index'
+			info.niv =  ''
+			info.msg = 'Votre message est transmis au service concerné : '+request.body.demande+' : '+request.body.message
+			info.saisie = 'no'
+		}
+
+		if (info.menu) response.render(info.page, { info })
 	}
-	if (request.body.message){
-		console.log (request.body+' '+request.body.message.lenght)
-		info.menu = 'index'
-		info.page = 'index'
-		info.niv =  ''
-		info.msg = 'Votre message est transmis au service concerné : '+request.body.demande+' : '+request.body.message
-		info.saisie = 'no'
-	}
-
-	if (info.menu) response.render(info.page, { info })
-}
 
 	//var info = new Object()
 	info.titre_demande = "Dernières demandes"
@@ -107,15 +105,12 @@ app.post('/', upload.array(), (request, response) => {
 	var menu = 'index'
 
 
-if (request.body.map){ 
-	info.menu = 'map'
-	info.page = 'map'
-	info.adresse = request.body.map
-	map(request, response, info)
-	
-}
-
-	//if (info.menu != 'map') response.render(info.page, { info })
+	if (request.body.map){ 
+		info.menu = 'map'
+		info.page = 'map'
+		info.adresse = request.body.map
+		map(request, response, info)
+	}
 
 })
 
@@ -129,29 +124,83 @@ app.get('/map', upload.array(), (request, response) => {
 	info.lat = 48.8946566
 	info.long = 2.2753577
 
-console.log ('map : '+info.adresse)
+	console.log ('map : '+info.adresse)
 	map(request, response, info)
 
 })
 
-app.get('/superuser', upload.array(), (request, response) => {
+app.get('/superuserok', upload.array(), (request, response) => {
 	var sess = request.session
-console.log('index superuser')
+	console.log ('superuser')
+
 	var info = new Object()
 	info.menu = 'superuser'
 	info.page = 'superuser'
 
-	//read_file("./texte.txt")
-	read_file("./package.json", 'utf8',  (err, data)=>{ info.data})
-	console.log('info.data '+info.data)
+	readFile("./superuser/documentation.txt", (data)=>{ 
+		console.log('data '+data.length)
+		info.text = data.replace(/\n/g, '<br>')
 
+		response.render(info.page, { info })
+	 })
+})
 
-//if (info.menu) response.render(info.page, { info })
+app.get('/superuser', upload.array(), (request, response) => {
+	var sess = request.session
+	console.log ('xxx superuser')
 
-console.log ('superuser : ')
+	var info = new Object()
+	info.menu = 'superuser'
+	info.page = 'superuser'
+	info.text = 'superuser'
 
+	var tbl = new Object()
+	final = 0
+	//var data = ''
+	tbl.b = readFile("./superuser/documentation.txt", (data)=>{
+		tbl.b = data + '<br>'
+		//++final
+		if (++final == 3) finalisation(response, info, tbl)
+	})
+	tbl.c = readFile("./routes/index.js", (data)=>{ 
+		tbl.c = decryptCode(data)+ '<br>'
+		//++final
+		if (++final == 3) finalisation(response, info, tbl)
+	})
+	tbl.d = readFile("./nodules/read_file.js", (data)=>{ 
+		tbl.d = decryptCode(data)+ '<br>'
+		//++final
+		if (++final == 3) finalisation(response, info, tbl)
+		//if (final == 3) response.render(info.page, { info })
+	})
 
 })
+
+
+
+app.get('/fichiers2', upload.array(), (request, response) => {
+	var fs = require("fs"),
+    path = require("path");
+    is_file = require('is-file')
+	var p = './superuser'
+	fs.readdir(p, function (err, files) {
+	    if (err) {
+	        throw err;
+	    }
+	    files.map((file)=>{
+	    	is_file(path.join(p, file), (err, bool)=>{
+	    		if (bool) { 
+	    			console.log('Fichier: '+path.join(p, file))
+					fs.readFile(path.join(p, file), {encoding : 'utf8'}, (err, data) => {
+						console.log(data)		
+					})
+	    		}else{ 
+	    			console.log('repertoire: '+path.join(p, file))	
+	    		}})
+	    	})
+	})
+})	
+
 
 app.get('/', (req, res) => { // traiter le cas apres demande erreur sur console 
 	var sess = req.session
@@ -170,9 +219,5 @@ app.get('/', (req, res) => { // traiter le cas apres demande erreur sur console
 	console.log('Get = '+req.body)
 })
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 module.exports = (app);
