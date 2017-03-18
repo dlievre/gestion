@@ -1,20 +1,19 @@
+// ***** fichier index.js
 var express = require('express')
 var app = express()
 //var router = express.Router();
 
-// @ body-parser, formate le request d'un form
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser')// body-parser, formate le request d'un form
 app.use(bodyParser.json()) // pour format json
-var multer = require('multer')
+var multer = require('multer') // à compléter
 var upload = multer()
 app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
 console.log('index.js')
 
-// ***** structure global des boutons 
+// ***** tableau global des boutons 
 var domaine = function() { 
-//var domaine.vehicule = new Object()
 	this.id = '',
 	this.nom = '',
 	this.menu = 'index',
@@ -71,7 +70,7 @@ domaines.accident_route = 'accident_route'
 domaines.accident_grave = 'accident_route_grave'
 
 // ***** traitement des clics des boutons
-app.post('/', upload.array(), (request, response) => { //***** app.post
+app.post('/', upload.array(), (request, response) => { //***** app.post écoute des boutons
 	var sess = request.session
 
 	for (variable in domaines) {	
@@ -105,7 +104,7 @@ app.post('/', upload.array(), (request, response) => { //***** app.post
 	var menu = 'index'
 
 
-	if (request.body.map){ 
+	if (request.body.map){ // @ géolocalisation de le demande
 		info.menu = 'map'
 		info.page = 'map'
 		info.adresse = request.body.map
@@ -114,7 +113,7 @@ app.post('/', upload.array(), (request, response) => { //***** app.post
 
 })
 
-app.get('/map', upload.array(), (request, response) => {
+app.get('/map', upload.array(), (request, response) => { // @ géolocalisation des sites
 	var sess = request.session
 
 	var info = new Object()
@@ -145,32 +144,35 @@ app.get('/superuserok', upload.array(), (request, response) => {
 	 })
 })
 
-app.get('/superuser', upload.array(), (request, response) => {
+app.get('/superuser', upload.array(), (request, response) => {  // @ app.get superuser
 	var sess = request.session
-	console.log ('xxx superuser')
+	console.log ('superuser')
 
 	var info = new Object()
 	info.menu = 'superuser'
 	info.page = 'superuser'
-	info.text = 'superuser'
+	//info.text = 'superuser'
 
 	var tbl = new Object()
 	final = 0
-	//var data = ''
+	// @ lecture fichier documentation
 	tbl.b = readFile("./superuser/documentation.txt", (data)=>{
 		tbl.b = data + '<br>'
-		//++final
-		if (++final == 3) finalisation(response, info, tbl)
+		if (++final == 4) finalisation(response, info, tbl)
 	})
+	// @ lecture fichier index
 	tbl.c = readFile("./routes/index.js", (data)=>{ 
 		tbl.c = decryptCode(data)+ '<br>'
-		//++final
-		if (++final == 3) finalisation(response, info, tbl)
+		if (++final == 4) finalisation(response, info, tbl)
 	})
 	tbl.d = readFile("./nodules/read_file.js", (data)=>{ 
 		tbl.d = decryptCode(data)+ '<br>'
-		//++final
-		if (++final == 3) finalisation(response, info, tbl)
+	if (++final == 4) finalisation(response, info, tbl)
+		//if (final == 3) response.render(info.page, { info })
+	})
+		tbl.e = readFile("app.js", (data)=>{ 
+		tbl.e = decryptCode(data)+ '<br>'
+		if (++final == 4) finalisation(response, info, tbl)
 		//if (final == 3) response.render(info.page, { info })
 	})
 
