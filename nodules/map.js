@@ -1,4 +1,4 @@
-//***** gestio de la map
+//***** fichier map.js - gestion de la map
 // @ map = (request, response, info)
 
 let reqhttp = require('request')// module requete http

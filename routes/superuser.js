@@ -11,10 +11,10 @@ var upload = multer()
 app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
-console.log('index.js ok')
+console.log('index alone.js')
 
-var _fonctions = require('../nodules/fonctions') // fonctions
-//var theDate = myDate()
+var readfile = require('../nodules/fonctions') // fonctions
+var theDate = myDate()
 
 // ***** tableau global des boutons 
 var domaine = function() { 
@@ -154,38 +154,26 @@ app.get('/superuser', upload.array(), (request, response) => {  // @ app.get sup
 	var sess = request.session
 	console.log ('superuser')
 
+var theDate = myDate()
+
 	var info = new Object()
 	info.menu = 'superuser'
 	info.page = 'superuser'
-	info.date = _fonctions.myDate()
-
+	info.date = theDate
 	//info.text = 'superuser'
 
+
+console.log(theDate)
 
 	var tbl = new Object()
 	final = 0
 	// @ lecture fichier documentation
 	tbl.a = readFile("./package.json", (data)=>{
-		tbl.a = decryptJson(data) + '<br>'
+		tbl.a = data + '<br>'
 		if (++final == 5) finalisation(response, info, tbl)
 	})
 	tbl.b = readFile("app.js", (data)=>{ 
 		tbl.b = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-		//if (final == 3) response.render(info.page, { info })
-	})
-	// @ lecture fichier index
-	tbl.c = readFile("./routes/index.js", (data)=>{ 
-		tbl.c = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-	})
-	tbl.d = readFile("./nodules/read_file.js", (data)=>{ 
-		tbl.d = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-		//if (final == 3) response.render(info.page, { info })
-	})
-	tbl.e = readFile("./nodules/map.js", (data)=>{ 
-		tbl.e = decryptCode(data)+ '<br>'
 		if (++final == 5) finalisation(response, info, tbl)
 		//if (final == 3) response.render(info.page, { info })
 	})

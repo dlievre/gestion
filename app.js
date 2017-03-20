@@ -1,9 +1,12 @@
+// ***** fichier app.js
+// ***** chargement des modules
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser'); // @ gestion des cookies
-var bodyParser = require('body-parser'); // @ body-parser, formate le request d'un form
+var cookieParser = require('cookie-parser'); // gestion des cookies
+var bodyParser = require('body-parser'); // body-parser, formate le request d'un form
 // ***** middleware en plus
 var multer = require('multer') // req.body récupère les champs d'un form
 // @ gestion des sessions
@@ -12,6 +15,7 @@ var session = require('express-session')
 var reqhttp = require('request')// module de requète http
 
 var index = require('./routes/index');
+//var superuser = require('./routes/superuser');
 var users = require('./routes/users');
 
 var app = express();
@@ -27,16 +31,15 @@ app.use(session({
 // pour une utilisation de session en production : utiliser redis : https://codeforgeek.com/2015/07/using-redis-to-handle-session-in-node-js/
 
 // ***** modules perso
+console.log('nodule file')
 // @ map module gestion de la map
 var map = require('./nodules/map') // affichage cartographie
-console.log('nodule file')
+// @ readfile module traitement fichier
 var readfile = require('./nodules/read_file') // lecture de fichier
 
-
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
 // ***** moteur template *****
 app.set('view engine', 'ejs')
@@ -47,16 +50,17 @@ app.set('view engine', 'ejs')
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json()); //parsing application json
-app.use(bodyParser.urlencoded({ extended: true })); // parsing application x/www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })) // parsing application x/www-form-urlencoded
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', index);
-app.use('/users', users);
+//app.use('/superuser', superuser)
+app.use('/', index)
+app.use('/users', users)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Not Found')
   err.status = 404;
   next(err);
 });
