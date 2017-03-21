@@ -154,42 +154,9 @@ app.get('/superuser', upload.array(), (request, response) => {  // @ app.get sup
 	var sess = request.session
 	console.log ('superuser')
 
-	var info = new Object()
-	info.menu = 'superuser'
-	info.page = 'superuser'
-	info.date = _fonctions.myDate()
-
-	//info.text = 'superuser'
-
-
-	var tbl = new Object()
-	final = 0
-	// @ lecture fichier documentation
-	tbl.a = readFile("./package.json", (data)=>{
-		tbl.a = decryptJson(data) + '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-	})
-	tbl.b = readFile("app.js", (data)=>{ 
-		tbl.b = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-		//if (final == 3) response.render(info.page, { info })
-	})
-	// @ lecture fichier index
-	tbl.c = readFile("./routes/index.js", (data)=>{ 
-		tbl.c = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-	})
-	tbl.d = readFile("./nodules/read_file.js", (data)=>{ 
-		tbl.d = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-		//if (final == 3) response.render(info.page, { info })
-	})
-	tbl.e = readFile("./nodules/map.js", (data)=>{ 
-		tbl.e = decryptCode(data)+ '<br>'
-		if (++final == 5) finalisation(response, info, tbl)
-		//if (final == 3) response.render(info.page, { info })
-	})
-
+	var _fonctions = require('./superuser') // fonctions
+	_super(request, response)
+	
 })
 
 
@@ -235,5 +202,13 @@ app.get('/', (req, res) => { // traiter le cas apres demande erreur sur console
 	console.log('Get = '+req.body)
 })
 
-
+// ***** affichage des erreurs
+//source http://expressjs.com/fr/guide/error-handling.html
+var methodOverride = require('method-override')
+app.use(methodOverride())
+app.use(function(err, req, res, next) {
+console.log ('err '+err)
+//console.log ('req '+req)
+//console.log ('res '+res)
+})
 module.exports = (app);

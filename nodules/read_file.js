@@ -71,10 +71,21 @@ decryptCode = (data)=>{ // @ filtre des lignes du code pour documentation automa
 	tblOut = tblOut.replace(/\[object Object\]/g, '')
 	tblOut = tblOut.replace(/var /g, '')
 	tblOut = tblOut.replace(/\//g, '')
+	tblOut = tblOut.replace(/\//g, '')
 	return tblOut
 }
 
-
+ 
+// ********  miseenformejson
+_decryptJson = (data)=>{ // @ filtre des lignes du code pour documentation automatique
+ 
+ 
+    //data = data.replace(/,/g, '<br>')
+    //data = data.replace(/"/g, ' ')
+    //data = data.replace(/\//g, '')
+    return data
+}
+ 
 // ********  miseenformejson
 
 module.exports = (readFile, multi, finalisation, decryptCode, readFileJson, verif) // @Export function
