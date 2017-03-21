@@ -130,7 +130,7 @@ app.get('/map', upload.array(), (request, response) => { // @ géolocalisation d
 	info.long = 2.2753577
 
 	console.log ('map : '+info.adresse)
-	map(request, response, info)
+	_map(request, response, info)
 
 })
 
@@ -156,7 +156,7 @@ app.get('/superuser', upload.array(), (request, response) => {  // @ app.get sup
 
 	var _fonctions = require('./superuser') // fonctions
 	_super(request, response)
-	
+
 })
 
 
@@ -210,5 +210,8 @@ app.use(function(err, req, res, next) {
 console.log ('err '+err)
 //console.log ('req '+req)
 //console.log ('res '+res)
+app.set('view engine', 'ejs')
+res.render('error', { err, req, res })
+
 })
 module.exports = (app);

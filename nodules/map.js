@@ -3,7 +3,7 @@
 
 let reqhttp = require('request')// module requete http
 
- map = (request, response, info) =>{
+ _map = (request, response, info) =>{
 	if (info.adresse && !info.lat){
 	    var openadresse = function(adresse, callback){
 	       adresse = adresse.replace(/^\s*|\s*$/,'')
@@ -33,4 +33,4 @@ let reqhttp = require('request')// module requete http
 	}
 }
 
-module.exports = map
+module.exports = _map
