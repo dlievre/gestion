@@ -133,6 +133,21 @@ app.get('/map', upload.array(), (request, response) => { // @ géolocalisation d
 	_map(request, response, info)
 
 })
+// https://www.npmjs.com/package/angular2-nvd3-aot
+// ***** traitement graphic
+app.get('/graphic', upload.array(), (request, response) => { // @ géolocalisation des sites
+	var sess = request.session
+
+	var info = new Object()
+	info.menu = 'graphic'
+	info.page = 'graphic'
+
+	info.long = 2.2753577
+
+	console.log ('graphic : a etudier')
+	_map(request, response, info)
+
+})
 
 app.get('/superuserok', upload.array(), (request, response) => {
 	var sess = request.session
@@ -159,6 +174,34 @@ app.get('/superuser', upload.array(), (request, response) => {  // @ app.get sup
 
 })
 
+// ***** traitement superuser
+app.get('/test', upload.array(), (request, response) => {  // @ app.get superuser
+	var sess = request.session
+	console.log ('index test')
+
+	var _fonctions = require('./test') // fonctions
+	_test1(request, response)
+
+})
+
+// ***** traitement superuser
+app.get('/test2', upload.array(), (request, response) => {  // @ app.get superuser
+	var sess = request.session
+	console.log ('index test2')
+
+	var _fonctions = require('./test2') // fonctions
+	_test2(request, response)
+
+})
+// ***** traitement superuser
+app.get('/test3', upload.array(), (request, response) => {  // @ app.get superuser
+	var sess = request.session
+	console.log ('index test3')
+
+	var _fonctions = require('./test3') // fonctions
+	_test3(request, response)
+
+})
 
 
 app.get('/fichiers2', upload.array(), (request, response) => {

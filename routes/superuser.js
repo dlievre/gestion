@@ -59,7 +59,7 @@ _super = (request, response) => { // @ retourne la date formatée
     //     if (++final == 5) _finalisation(response, info, tbl)
     //     //if (final == 3) response.render(info.page, { info })
     // })
- 
+
 //var data = {};
 //readFiles('../routes/') 
 	var readfile = require('../nodules/read_file') // lecture de fichier
@@ -71,13 +71,11 @@ _filesDir('./routes', (files)=>{
 		if (file.indexOf('.js') >= 0 || file.indexOf('.ejs') >= 0){
 			console.log('file : '+ file )
 
-
-		    tbl.d = _readFile("./routes/"+file, (data)=>{
-		        tbl.d = _decryptCode(data)+ '<br>'
-		        if (++final == 1) _finalisation(response, info, tbl)
-		        //if (final == 3) response.render(info.page, { info })
-
-			})
+		    // tbl.d = _readFile("./routes/"+file, (data)=>{
+		    //     tbl.d = _decryptCode(data)+ '<br>'
+		    //     if (++final == 1) _finalisation(response, info, tbl)
+		    //     //if (final == 3) response.render(info.page, { info })
+			// })
 		}
 		
 
@@ -85,7 +83,8 @@ _filesDir('./routes', (files)=>{
 
 })
 
-//response.render(info.page, { info })
+
+response.render(info.page, { info })
 //readFiles(path.resolve(__dirname, '../routes/'), function(filename, content) { 
     //_fonctions.verif()
  
