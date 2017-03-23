@@ -1,5 +1,4 @@
-
-// ***** fichier test.js
+// ***** fichier test3.js
 var fs = require("fs")
  
 _test3 = (request, response) => { // @ retourne la date formatée
@@ -22,7 +21,7 @@ _test3 = (request, response) => { // @ retourne la date formatée
         info.menu = 'superuser'
         info.page = 'superuser'   
         info.date = _myDate()
-        info.text = 'text'
+        info.text = ''
  
 var tbl = new Object()
 
@@ -31,12 +30,12 @@ suivi.path = './routes'
 suivi.nbFilesTotal = 0
 suivi.FilesTraitment = 0
 
-debut0 = () =>{ // recupere les nom de fichier d'un dossier
+debut0 = () =>{ // recupere les nom des fichiers d'un dossier
 	_filesDir(suivi.path, suite1)
 	console.log('debut0')
 }
 
-suite1 = (files)=>{ // 
+suite1 = (files)=>{ // ne prend que les .js
 	files.forEach( (file)=>{ 
 		if (file.indexOf('.js') >= 0 || file.indexOf('.ejs') >= 0){
 			++suivi.nbFilesTotal
@@ -46,43 +45,47 @@ suite1 = (files)=>{ //
 	suite2(files)
 }
 
-suite2 = (files)=> { 
+suite2 = (files)=> { // lecture du contenu des fichiers
 	files.forEach( (file)=>{
 		if (file.indexOf('.js') >= 0 || file.indexOf('.ejs') >= 0){
-		_readFile(suivi.path+'/'+file, suite3)
+		_readFile(suivi.path+'/'+file, file, suite3)
 			console.log('file : '+file)
 		}
 	})
 }
 
-suite3 = (fichier, data)=>{
-	//console.log('read'+ data)
+suite3 = (fichier, data)=>{ // concaténation du contenu
 	++suivi.FilesTraitment
 	console.log(suivi.FilesTraitment)
-	tbl.fichier = data
+	info.text += '***********************'+fichier+'\n'
+	info.text += data.toString()
 	console.log('fichier '+ fichier)
 	//console.log('data '+ data)
-	if (suivi.FilesTraitment === suivi.nbFilesTotal ) suite4()
+	if (suivi.FilesTraitment === suivi.nbFilesTotal ) suite4(info.text)
 }
 
-suite4 = ()=>{
+suite4 = (data)=>{ // mise en forme du contenu
+	console.log('decrypt')
+	console.log('tbl'+tbl.fichier)
+	decryptCode(data, suite5)
+	//suivi = ''
+}
+
+suite5 = (data)=>{ // affichage du résultat
+	info.text = data // on maj les données du tableau gal pour le passer ensuite
 	console.log('fin')
-	response.render(info.page, { info, tbl})
-	suivi = ''
+	console.log('tbl'+tbl.fichier)
+	response.render(info.page, {info})
+	//suivi = ''
 }
-
 
 
 debut0()
-
-	
 
     //response.render(info.page, { info })
  
 //    info.date = _fonctions.myDate()
 }
-
-
 
 
 
@@ -94,15 +97,14 @@ _filesDir = (dirname, callback)=> {
 	})
 }
 
-_readFile = function(fichier, callback){ // @ lecture de fichier asynchrone
+_readFile = function(fichier, file, callback){ // @ lecture de fichier asynchrone
 	fs.readFile(fichier, {encoding : 'utf8'}, (err, data) => {
 			console.log('data '+fichier)
-			//console.log('data '+data)
-			callback(fichier, data)
+			callback(file, data)
 	})
 }
 
-decryptCode = (data)=>{ // @ filtre des lignes du code pour documentation automatique
+decryptCode = (data, callback)=>{ // @ filtre des lignes du code pour documentation automatique
 
 	var tblIn = data.split("\n") // conversion en array avec \n comme delimiter
 	var tblOut = new Object()
@@ -129,7 +131,7 @@ decryptCode = (data)=>{ // @ filtre des lignes du code pour documentation automa
 	tblOut = tblOut.replace(/\[object Object\]/g, '')
 	tblOut = tblOut.replace(/var /g, '')
 	tblOut = tblOut.replace(/\//g, '')
-	return tblOut
+	callback(tblOut)
 } 
  
 module.exports = (_test3, _filesDir)
