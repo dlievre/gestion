@@ -1,14 +1,13 @@
-// ***** fichier test3.js
 var fs = require("fs")
 // ***** traitement super user
 _super = (request, response) => { 
-	// @ chargement des modules
-	    var express = require('express') // @> express
+	// ***** chargement des modules
+	    var express = require('express') // @ express
 	    var app = express()
 	    //var router = express.Router();
-	    var bodyParser = require('body-parser')// @> body-parser, formate le request d'un form
+	    var bodyParser = require('body-parser')// @ body-parser, formate le request d'un form
 	    app.use(bodyParser.json()) // pour format json
-	    var multer = require('multer') // req.body récupère les champs d'un form
+	    var multer = require('multer') // @ req.body récupère les champs d'un form
 	    var upload = multer()
 	    app.use(bodyParser.json()) //parsing application json
 	    app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
@@ -16,7 +15,7 @@ _super = (request, response) => {
 	    console.log('test')
 	 
 	    var _fonctions = require('../nodules/fonctions') // fonctions
-	    var moduleDateFormat = require('date-format')
+	    var moduleDateFormat = require('date-format') // @ module date-format
 	 
 	        var info = new Object()
 	        info.menu = 'superuser'
@@ -31,7 +30,7 @@ _super = (request, response) => {
 	suivi.nbFilesTotal = 0
 	suivi.FilesTraitment = 0
 	//***** traitement de la documentation auto
-	// @ recupere les nom des fichiers d'un dossier
+	// @ recupere les noms des fichiers d'un dossier
 	debut0 = () =>{ 
 		_filesDir(suivi.path, suite1)
 		console.log('debut0')
@@ -66,7 +65,7 @@ _super = (request, response) => {
 		//console.log('data '+ data)
 		if (suivi.FilesTraitment === suivi.nbFilesTotal ) {
 			for (i=0; i <= results.length; i++)
-				info.text += i+'  Fichier '+results[i]
+				info.text += results[i]
 			console.log('fin concaténation ')
 			suite4(info.text)
 		}
@@ -84,14 +83,10 @@ _super = (request, response) => {
 		response.render(info.page, {info})
 	}
 
-
 	debut0()
-
 }
 
-
-
-// _filesDir @  retourne la liste des fichiers d'un dossier
+//  @ _filesDir - retourne la liste des fichiers d'un dossier
 _filesDir = (dirname, callback)=> {
 	fs.readdir(dirname,(err, files)=>{
 	   if (err) { return console.error(err) }
@@ -99,7 +94,7 @@ _filesDir = (dirname, callback)=> {
 	})
 }
 
-// _readFile @ lecture de fichier asynchrone
+//  @ _readFile - lecture de fichier asynchrone
 _readFile = function(fichier, file, no, callback){ 
 	fs.readFile(fichier, {encoding : 'utf8'}, (err, data) => {
 	var tblOut = "<br>"
@@ -112,7 +107,7 @@ _readFile = function(fichier, file, no, callback){
 	})
 }
 
-// decryptCode @  filtre des lignes du code pour documentation automatique
+// @ _decryptCode - filtre des lignes du code pour documentation automatique
 _decryptCode = (data, callback)=>{ 
 
 	var tblIn = data.split("<br>") // conversion en array avec \n comme delimiter
@@ -120,9 +115,9 @@ _decryptCode = (data, callback)=>{
 	var tblSyntax = new Object()
 	// @ liste des mots clé pris en compte
 	//tblSyntax.a = 'require'
-	tblSyntax.a = '@'
-	tblSyntax.b = '****'
-	tblSyntax.c = '#'
+	tblSyntax.a = ' '+'@ '
+	tblSyntax.e = '**'+'**'
+	tblSyntax.aa = '@'+'@'
 	//tblSyntax.d = module.exports
 
 	console.log(typeof (data))
@@ -133,20 +128,21 @@ _decryptCode = (data, callback)=>{
 	for (nb = 0; nb < tblIn.length; nb++)
 	{
 		for (key in tblSyntax){
-			if (tblSyntax[key] == tblSyntax.c){
-				//console.log('finir traitement @>')
-				if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // traitement @>
-					tblOut += tblIn[nb].substr(tblIn[nb].indexOf(tblSyntax[key])) +'<br>'
-				if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // traitement @>
-					console.log(' n '+tblIn[nb].indexOf(tblSyntax[key]))
-				}
-			if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // ajouter @>
-				tblOut += tblIn[nb]+'<br>'
+			if (tblSyntax[key] == tblSyntax.a)
+				if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // 
+					tblOut += '&nbsp;&nbsp;&nbsp;&nbsp;'+tblIn[nb].substr(tblIn[nb].indexOf(tblSyntax[key])) +'<br>'
+			if (tblSyntax[key] == tblSyntax.aa)
+				if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // 
+					tblOut += tblIn[nb]+'<br>'
+			if (tblSyntax[key] == tblSyntax.e)
+				if (tblIn[nb].indexOf(tblSyntax[key]) >= 0) // 
+					tblOut += tblIn[nb]+'<br>'
 		}
 	}
-
+// @@ remplacement caracteres
 	tblOut = tblOut.replace(/\[object Object\]/g, '')
 	tblOut = tblOut.replace(/var /g, '')
+	//tblOut = tblOut.replace(/@/g, '-')
 	tblOut = tblOut.replace(/\/\//g, '')
 	callback(tblOut)
 } 

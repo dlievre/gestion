@@ -1,34 +1,28 @@
-// ***** fichier index.js
+// # routage des post et get
 // ***** chargement des modules
 var express = require('express')
 var app = express()
 //var router = express.Router();
 
-var bodyParser = require('body-parser')// body-parser, formate le request d'un form
+var bodyParser = require('body-parser')// @ body-parser, formate le request d'un form
 app.use(bodyParser.json()) // pour format json
-var multer = require('multer') // req.body récupère les champs d'un form
+var multer = require('multer') // @ multer req.body récupère les champs d'un form
 var upload = multer()
 app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
-var datejour = require('date-format');
+var datejour = require('date-format')  // @ date-format
 var now = new Date()
 var options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
 now = now.toLocaleDateString("fr-FR", options)
 
 console.log('index.js')
 
-
-
-
-
-console.log('index.js ok')
-
-var _fonctions = require('../nodules/fonctions') // fonctions
+var _fonctions = require('../nodules/fonctions') // @ nodules/fonctions
 //var theDate = myDate()
 
 // ***** tableau global des boutons 
-var domaine = function() { 
+var domaine = function() { // @ variables menu, page, niv, msg, saisie
 	this.id = '',
 	this.nom = '',
 	this.menu = 'index',
@@ -84,10 +78,8 @@ domaines.accident = 'accident'
 domaines.accident_route = 'accident_route'
 domaines.accident_grave = 'accident_route_grave'
 
-//***** 
-
-// ***** traitement des clics des boutons
-app.post('/', upload.array(), (request, response) => { //***** app.post écoute des boutons
+// ***** traitement des routes et clics des form / boutons
+app.post('/', upload.array(), (request, response) => { //@ app.post('/' écoute des boutons
 	var sess = request.session
 
 	for (variable in domaines) {	
@@ -101,7 +93,6 @@ app.post('/', upload.array(), (request, response) => { //***** app.post écoute 
 				info.niv =  eval(variable+'.niv')
 				info.msg = eval(variable+'.msg')
 				info.saisie = eval(variable+'.saisie')
-
 		}
 		if (request.body.message){
 			console.log (request.body+' '+request.body.message.lenght)
@@ -121,7 +112,7 @@ app.post('/', upload.array(), (request, response) => { //***** app.post écoute 
 	var menu = 'index'
 
 
-	if (request.body.map){ // @ géolocalisation de le demande
+	if (request.body.map){ // @ géolocalisation de la demande
 		info.menu = 'map'
 		info.page = 'map'
 		info.adresse = request.body.map
@@ -130,7 +121,7 @@ app.post('/', upload.array(), (request, response) => { //***** app.post écoute 
 
 })
 // ***** traitement map
-app.get('/map', upload.array(), (request, response) => { // @ géolocalisation des sites
+app.get('/map', upload.array(), (request, response) => { // @ app.get('/map' - géolocalisation des sites
 	var sess = request.session
 
 	var info = new Object()
@@ -146,7 +137,7 @@ app.get('/map', upload.array(), (request, response) => { // @ géolocalisation d
 })
 // https://www.npmjs.com/package/angular2-nvd3-aot
 // ***** traitement graphic
-app.get('/graphic', upload.array(), (request, response) => { // @ géolocalisation des sites
+app.get('/graphic', upload.array(), (request, response) => { // @ app.get('/graphic' - graphic
 	var sess = request.session
 
 	var info = new Object()
@@ -160,33 +151,18 @@ app.get('/graphic', upload.array(), (request, response) => { // @ géolocalisati
 
 })
 
-app.get('/superuserok', upload.array(), (request, response) => {
+// ***** traitement superuser
+app.get('/superuser', upload.array(), (request, response) => {  // @ app.get('/superuser' superuser
 	var sess = request.session
 	console.log ('superuser')
 
-	var info = new Object()
-	info.menu = 'superuser'
-	info.page = 'superuser'
-
-	readFile("./superuser/documentation.txt", (data)=>{ 
-		console.log('data '+data.length)
-		info.text = data.replace(/\n/g, '<br>')
-
-		response.render(info.page, { info })
-	 })
-})
-// ***** traitement superuser
-app.get('/superuser', upload.array(), (request, response) => {  // @ app.get superuser
-	var sess = request.session
-	console.log ('superuser')
-
-	var _fonctions = require('./superuser') // fonctions
-	_super(request, response)
+	var _fonctions = require('./superuser')
+	_super(request, response) // @ _super - './superuser'
 
 })
 
-// ***** traitement superuser
-app.get('/base', upload.array(), (request, response) => {  // @ app.get superuser
+// ***** traitement base de donnée
+app.get('/base', upload.array(), (request, response) => {  // @ app.get('/base'
 	var sess = request.session
 	console.log ('index test')
 
