@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title></title>
+ 
+<script language="JavaScript">
+//<!--
+var deep = 0;
+ 
+// affichage des éléments d'un object
+function listObject(object, maxdeep) {
+    var decal = '-- ';
+    var textObject = "";
+    for (var i in object) {
+      console.log(object[i])
+        // création de l'indentation
+        var indent = "";
+        for (var y = 0; y < deep; y++) indent += decal;
+        // nom de la propriété
+        textObject += "deep = " + deep + " : " + indent + "<b>" + i + "</b> : ";
+        if (typeof(object[i]) == ("object") && deep < maxdeep) {
+            deep++;
+            textObject += "<br />" + listObject(object[i],  maxdeep);
+            deep--;
+        }
+        else {
+            // valeur de la propriété
+            textObject += object[i] + "<br />";
+        }
+    }
+    return (textObject);
+}
+ 
+// Affichage dans le div des éléments d'un object
+function retourObj (object, deep) {
+    var evalObject = eval(object);
+    document.getElementById('infoObject').style.display = "";
+    document.getElementById('infoObject').innerHTML = (object) ? listObject(evalObject, deep) : "Ce n'est pas un object";
+}
+ 
+var myObject5 = {"myFunction" : function() {alert('Vive JSON')}, "myProperty" : "pas sur"};
+ 
+var myObject4 = [[[["tb4", "tb4-1", "tb4-2"], "tb3"], "tb2", "tb2-1"], "tb1", "tb1-1", "tb1-2", "tb1-3"];
+ 
+var myObject3 =
+{"markers": [
+     {"lat":43.65654, "lng":-79.90138, "html":"Some stuff to display in the First Info Window","label":"Marker One"},
+     {"lat":43.91892, "lng":-78.89231, "html":"Some stuff to display in the Second Info Window","label":"Marker Two"},
+     {"lat":43.82589, "lng":-79.10040, "html":"Some stuff to display in the Third Info Window","label":"Marker Three"}
+   ],
+   "lines": [
+       {"colour":"#FF0000", "width":2, "points":[ {"lat":43.65654 ,"lng":-79.90138 },
+                                                  {"lat":43.91892 ,"lng":-78.89231 },
+                                                  {"lat":43.82589 ,"lng":-79.10040 }
+                                                ]
+       },
+       {"colour":"#008800", "width":4, "points":[ {"lat":43.9078 ,"lng":-79.0264 },
+                                                  {"lat":44.1037 ,"lng":-79.6294 },
+                                                  {"lat":43.5908 ,"lng":-79.2567 },
+                                                  {"lat":44.2248 ,"lng":-79.2567 },
+                                                  {"lat":43.7119 ,"lng":-79.6294 },
+                                                  {"lat":43.9078 ,"lng":-79.0264 }
+                                                ]
+       }
+   ]
+}
+ 
+var myObject2 =
+{ "Itinéraire" :
+    { "nom" : "Iti-1",
+      "Etapes" : [
+          { "nom" : "étape-1",
+            "Coordonnées": [
+                  {"lat" : "1", "lng" : "1", "typepoly" : "0"},
+                  {"lat" : "2", "lng" : "2", "typepoly" : "0"},
+                  {"lat" : "3", "lng" : "3", "typepoly" : "0"},
+                  {"lat" : "4", "lng" : "4", "typepoly" : "1"},
+                  {"lat" : "5", "lng" : "5", "typepoly" : "0"}
+            ]
+          },
+          { "nom" : "étape-2",
+            "Coordonnées": [
+                  {"lat" : "1", "lng" : "1", "typepoly" : "1"},
+                  {"lat" : "2", "lng" : "2", "typepoly" : "1"},
+                  {"lat" : "3", "lng" : "3", "typepoly" : "1"},
+                  {"lat" : "4", "lng" : "4", "typepoly" : "1"},
+                  {"lat" : "5", "lng" : "5", "typepoly" : "0"}
+            ]
+          }
+      ]
+    }
+};
+ 
+var myObject1 = { "P" : { "P-1" : "p-1", "P-12" : "p-12"}, "Q" : "q-1", "R" : { "R1" : { "R2" : "r-2", "R21" : "r-3"}}}
+ 
+var myObject0 = [ "a", [ "b", "c", [ "d0", "d1", "d2", "d3"],],"e", "f", [ "g0", "g1", "g2" ],];
+ 
+// -->
+</script>
+ 
+</head>
+  <body>
+    <form>
+      Entrez un objet du modèle :
+      <input type="text" id="valObject" name="" value="myObject0"><br>
+      Profondeur de visuatisation :
+      <input type="text" id="deepObject" name="" value="5"><br>
+      <button type="button" value="Voir les propriétés" onClick="retourObj(document.getElementById('valObject').value, document.getElementById('deepObject').value)">
+        Voir les propriétés
+      </button><br />
+      <button type="button" onclick="myObject5.myFunction();" value="">myObject5.myFunction()</button>
+    </form>
+    <div id="infoObject" style="border:1px solid black; background-color: InfoBackground;	display: none; height: 80%; overflow: auto;">
+    </div>
+  </body>
+</html>

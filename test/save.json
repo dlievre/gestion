@@ -1,0 +1,6 @@
+"start": "nodemon app.js"
+"main": "app.js",
+
+
+<% tbl.forEach(function(el, index) {%>
+    <p> <%= el %> </p><% }) %>

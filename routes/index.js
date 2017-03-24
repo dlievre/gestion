@@ -11,6 +11,17 @@ var upload = multer()
 app.use(bodyParser.json()) //parsing application json
 app.use(bodyParser.urlencoded({extended: true})) // parsing application x/www-form-urlencoded
 
+var datejour = require('date-format');
+var now = new Date()
+var options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+now = now.toLocaleDateString("fr-FR", options)
+
+console.log('index.js')
+
+
+
+
+
 console.log('index.js ok')
 
 var _fonctions = require('../nodules/fonctions') // fonctions
@@ -114,7 +125,7 @@ app.post('/', upload.array(), (request, response) => { //***** app.post écoute 
 		info.menu = 'map'
 		info.page = 'map'
 		info.adresse = request.body.map
-		map(request, response, info)
+		_map(request, response, info)
 	}
 
 })
@@ -175,24 +186,17 @@ app.get('/superuser', upload.array(), (request, response) => {  // @ app.get sup
 })
 
 // ***** traitement superuser
-app.get('/test', upload.array(), (request, response) => {  // @ app.get superuser
+app.get('/base', upload.array(), (request, response) => {  // @ app.get superuser
 	var sess = request.session
 	console.log ('index test')
 
-	var _fonctions = require('./test') // fonctions
-	_test1(request, response)
+	//***** gestion de la base de donnée
+	var nodule_CBasedb = require('../nodules/CBasedb')
+	_base(request, response)
 
 })
 
-// ***** traitement superuser
-app.get('/test2', upload.array(), (request, response) => {  // @ app.get superuser
-	var sess = request.session
-	console.log ('index test2')
 
-	var _fonctions = require('./test2') // fonctions
-	_test2(request, response)
-
-})
 // ***** traitement superuser
 app.get('/test3', upload.array(), (request, response) => {  // @ app.get superuser
 	var sess = request.session
