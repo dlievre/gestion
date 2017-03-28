@@ -174,12 +174,12 @@ app.get('/base', upload.array(), (request, response) => {  // @ app.get('/base'
 
 
 // ***** traitement superuser
-app.get('/test3', upload.array(), (request, response) => {  // @ app.get superuser
+app.get('/test4', upload.array(), (request, response) => {  // @ app.get superuser
 	var sess = request.session
-	console.log ('index test3')
+	console.log ('index test4')
 
-	var _fonctions = require('./test3') // fonctions
-	_test3(request, response)
+	var _fonctions = require('./test4') // fonctions
+	_super4(request, response)
 
 })
 
@@ -226,11 +226,14 @@ app.get('/', (req, res) => { // traiter le cas apres demande erreur sur console
 })
 
 // ***** affichage des erreurs
+//source https://nodejs.org/api/errors.html
 //source http://expressjs.com/fr/guide/error-handling.html
 var methodOverride = require('method-override')
 app.use(methodOverride())
 app.use(function(err, req, res, next) {
+console.log ('err.stack '+err.stack)
 console.log ('err '+err)
+
 //console.log ('req '+req)
 //console.log ('res '+res)
 app.set('view engine', 'ejs')
