@@ -31,13 +31,16 @@ _super = (request, response) => {
 	suivi.FilesTraitment = 0
 	//***** traitement de la documentation auto
 	// @ recupere les noms des fichiers d'un dossier
+
 	debut0 = () =>{ 
 		_filesDir(suivi.path, suite1)
 		console.log('debut0')
 	}
 	// @ ne prend que les .js
+		//var tbl = []
 	suite1 = (files)=>{ 
-		files.forEach( (file)=>{ 
+		files.forEach( (file)=>{
+				//tbl.push(file)
 			if (file.indexOf('.js') >= 0 || file.indexOf('.ejs') >= 0){
 				++suivi.nbFilesTotal
 			}
