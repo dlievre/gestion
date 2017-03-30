@@ -78,6 +78,30 @@ domaines.accident = 'accident'
 domaines.accident_route = 'accident_route'
 domaines.accident_grave = 'accident_route_grave'
 
+// 	 // ***** traitement des routes et clics des form / boutons
+// app.post('/talk', upload.array(), (request, response) => { //@ app.post('/' écoute des boutons
+// 	var sess = request.session
+// 	console.log ('index talk post')
+// 	var info = new Object()
+
+//     info.menu = 'talk'
+//     info.page = 'talk'   
+//     info.date = _myDate()
+//     info.text = ''
+
+//     info.niv = '0'
+//     console.log('n1'+request.body.n1)
+//     if (request.body.n1){ 
+//     	info.niv = '1' 
+//     	console.log('n1')
+// 	}
+//     if (request.body.n2){ info.niv = '2' }
+
+// 	var _fonctions = require('./talk') // fonctions
+// 	_talk(request, response, info)
+
+// })
+
 // ***** traitement des routes et clics des form / boutons
 app.post('/', upload.array(), (request, response) => { //@ app.post('/' écoute des boutons
 	var sess = request.session
@@ -88,11 +112,11 @@ app.post('/', upload.array(), (request, response) => { //@ app.post('/' écoute 
 		var info = new Object()
 		if (eval(requete)){
 			console.log('req '+variable+ eval(variable.niv))
-				info.menu = eval(variable+'.menu')
-				info.page = eval(variable+'.page')
-				info.niv =  eval(variable+'.niv')
-				info.msg = eval(variable+'.msg')
-				info.saisie = eval(variable+'.saisie')
+			info.menu = eval(variable+'.menu')
+			info.page = eval(variable+'.page')
+			info.niv =  eval(variable+'.niv')
+			info.msg = eval(variable+'.msg')
+			info.saisie = eval(variable+'.saisie')
 		}
 		if (request.body.message){
 			console.log (request.body+' '+request.body.message.lenght)
@@ -115,21 +139,32 @@ app.post('/', upload.array(), (request, response) => { //@ app.post('/' écoute 
 	if (request.body.map){ // @ géolocalisation de la demande
 		info.menu = 'map'
 		info.page = 'map'
+
 		info.adresse = request.body.map
 		_map(request, response, info)
 	}
 
+	    if (request.body.talk){ 
+	    info.menu = 'talk'
+    	info.page = 'talk'   
+    	console.log('post talk')
+    	var _fonctions = require('./talk') // talk
+		_talk(request, response, info)
+		}
+
 })
 // ***** traitement map
-app.get('/map', upload.array(), (request, response) => { // @ app.get('/map' - géolocalisation des sites
+app.get('/mapall', upload.array(), (request, response) => { // @ app.get('/map' - géolocalisation des sites
 	var sess = request.session
 
 	var info = new Object()
 	info.menu = 'map'
 	info.page = 'map'
-	info.adresse = '255, avenue des champs-elysees, paris'
+	//info.adresse = '255, avenue des champs-elysees, paris'
 	info.lat = 48.8946566
 	info.long = 2.2753577
+	info.mapall = 'yes'
+	console.log('mapall')
 
 	console.log ('map : '+info.adresse)
 	_map(request, response, info)
@@ -144,10 +179,8 @@ app.get('/graphic', upload.array(), (request, response) => { // @ app.get('/grap
 	info.menu = 'graphic'
 	info.page = 'graphic'
 
-	info.long = 2.2753577
-
-	console.log ('graphic : a etudier')
-	_map(request, response, info)
+	console.log ('graphic ')
+	if (info.menu) response.render(info.page, { info })
 
 })
 
@@ -173,15 +206,26 @@ app.get('/base', upload.array(), (request, response) => {  // @ app.get('/base'
 })
 
 
-// ***** traitement superuser
-app.get('/test4', upload.array(), (request, response) => {  // @ app.get superuser
-	var sess = request.session
-	console.log ('index test4')
 
-	var _fonctions = require('./test4') // fonctions
-	_super4(request, response)
+
+// ***** traitement superuser
+app.get('/talk', upload.array(), (request, response) => {  // @ app.get superuser
+	var sess = request.session
+	console.log ('index talk get')
+
+		var info = new Object()
+
+	    info.menu = 'talk'
+    	info.page = 'talk'   
+    	info.niv = '0' 
+    	console.log('n0')
+
+	var _fonctions = require('./talk') // fonctions
+	_talk(request, response, info)
 
 })
+
+
 
 
 app.get('/fichiers2', upload.array(), (request, response) => {
