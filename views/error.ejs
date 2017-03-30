@@ -1,11 +1,9 @@
-extends layout
 
-block content
-message
-  h2= error.status
-  pre #{error.stack}
 
-  <p>Error Handling in Node.js</p>
+<% if (locals.err) { %><p>
+<%- Object.values(err) %>
+</p>
+<% } %>
   <p>https://www.joyent.com/node-js/production/design/errors</p>
   <p>http://naholyr.fr/2011/08/ecrire-service-rest-nodejs-express-partie-2/</p>
 

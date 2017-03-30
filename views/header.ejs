@@ -14,26 +14,54 @@
 <div class="ui fixed inverted menu">
 <% if (locals.info.menu == 'index') { %>
 <a href="/" class="header active item"><i class="home icon"></i>Accueil</a>
-<a href="/map" class="header item"><i class="street view icon"></i>Cartographie</a>
-<a href="/" class="header item"><i class="talk outline icon"></i>Discussion</a>
+<a href="/mapall" class="header item"><i class="street view icon"></i>Cartographie</a>
+<a href="/graphic" class="header item"><i class="bar chart icon"></i>Graphique</a>
+<a href="/talk" class="header item"><i class="talk outline icon"></i>Discussion</a>
 <a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
 <a href="/" class="header item"><i class="settings icon"></i>Settings</a>
 <a href="/superuser" class="header item"><i class="trophy icon"></i>Super User</a>
 <% } %>
 <% if (locals.info.menu == 'map') { %>
 <a href="/" class="header item"><i class="home icon"></i>Accueil</a>
-<a href="/map" class="header active item"><i class="street view icon"></i>Cartographie</a>
+<a href="/mapall" class="header active item"><i class="street view icon"></i>Cartographie</a>
+<a href="/graphic" class="header item"><i class="bar chart icon"></i>Graphique</a>
+<a href="/talk" class="header item"><i class="talk outline icon"></i>Discussion</a>
 <a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
 <a href="/" class="header item"><i class="settings icon"></i>Settings</a>
+<a href="/superuser" class="header item"><i class="trophy icon"></i>Super User</a>
+<% } %>
+<% if (locals.info.menu == 'graphic') { %>
+<a href="/" class="header item"><i class="home icon"></i>Accueil</a>
+<a href="/map" class="header item"><i class="street view icon"></i>Cartographie</a>
+<a href="/graphic" class="header active item"><i class="bar chart icon"></i>Graphique</a>
+<a href="/talk" class="header item"><i class="talk outline icon"></i>Discussion</a>
+<a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
+<a href="/" class="header item"><i class="settings icon"></i>Settings</a>
+<a href="/superuser" class="header item"><i class="trophy icon"></i>Super User</a>
 <% } %>
 <% if (locals.info.menu == 'superuser') { %>
 <a href="/" class="header item"><i class="home icon"></i>Accueil</a>
 <a href="/map" class="header item"><i class="street view icon"></i>Cartographie</a>
+<a href="/graphic" class="header item"><i class="bar chart icon"></i>Graphique</a>
 <a href="/" class="header item"><i class="talk outline icon"></i>Discussion</a>
 <a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
 <a href="/" class="header item"><i class="settings icon"></i>Settings</a>
 <a href="/superuser" class="header active item"><i class="trophy icon"></i>Super User</a>
 <% } %>
+<% if (locals.info.menu == 'talk') { %>
+<a href="/" class="header item"><i class="home icon"></i>Accueil</a>
+<a href="/map" class="header item"><i class="street view icon"></i>Cartographie</a>
+<a href="/graphic" class="header item"><i class="bar chart icon"></i>Graphique</a>
+<a href="/talk" class="header active item"><i class="talk outline icon"></i>Discussion</a>
+<a href="/" class="header item"><i class="signal icon"></i>Login DLievre</a>
+<a href="/" class="header item"><i class="settings icon"></i>Settings</a>
+<a href="/superuser" class="header item"><i class="trophy icon"></i>Super User</a>
+<% } %>
+
+<% if (locals.info.date) { %>
+<div  class="header item"><%= info.date %></div>
+<% } %>
+
 </div>
 <div class="ui main container" >
 <% if (locals.error) { %><div class="ui negative message"><p><%= error %></p></div><% } %>

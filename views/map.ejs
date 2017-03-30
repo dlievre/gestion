@@ -18,12 +18,27 @@
       L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(mymap);
     //  var searchControl = L.control.photon(photonControlOptions);
    // searchControl.addTo(map);
-
-L.marker([<%= lat %>, <%= lon %>]).addTo(mymap)
+<% if (locals.info.adresse) { %>
+	L.marker([<%= lat %>, <%= lon %>]).addTo(mymap)
+    .bindPopup('<%= info.adresse %>')
+<% } %>
+<% if (locals.info.mapall) { %>
+    L.marker([<%= lat+0.012 %>, <%= lon-0.008 %>]).addTo(mymap)
+    .bindPopup('<%= info.adresse %>')
+    L.marker([<%= lat-0.012 %>, <%= lon+0.005 %>]).addTo(mymap)
+    .bindPopup('<%= info.adresse %>')
+    L.marker([<%= lat-0.002 %>, <%= lon+0.008 %>]).addTo(mymap)
     .bindPopup('<%= info.adresse %>')
     //.openPopup();
-      
-    </script>
+<% } %>
+</script>
+<% if (locals.info.mapall) { %>
+    <p><br>Site A - 3, rue Baudin - Levallois Perret<br>
+    Site B - 22, rue Danton - Levallois Perret<br>
+    Site C - 5, rue de Villiers - Neuilly<br>
+    Site D - 25, rue du Tintoret - Asnieres</p>
+<% } %>
+
 </div>
 
 <% include footer %>
