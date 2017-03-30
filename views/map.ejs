@@ -23,6 +23,8 @@
     .bindPopup('<%= info.adresse %>')
 <% } %>
 <% if (locals.info.mapall) { %>
+    L.marker([<%= lat %>, <%= lon %>]).addTo(mymap)
+    .bindPopup('<%= info.adresse %>')
     L.marker([<%= lat+0.012 %>, <%= lon-0.008 %>]).addTo(mymap)
     .bindPopup('<%= info.adresse %>')
     L.marker([<%= lat-0.012 %>, <%= lon+0.005 %>]).addTo(mymap)
